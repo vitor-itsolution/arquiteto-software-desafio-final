@@ -1,4 +1,4 @@
-# 🧱 Projeto de API RESTful com Arquitetura MVC - .NET 8
+# 🧱 Projeto com Arquitetura MVC - .NET 8
 
 ## 📚 Objetivos de Ensino
 
@@ -29,15 +29,15 @@ Este projeto visa exercitar os seguintes conceitos:
 
 ### Endpoints Disponíveis
 
-| Método HTTP | URI                       | Descrição                        |
-|-------------|---------------------------|----------------------------------|
-| GET         | /api/clientes             | Lista todos os clientes          |
-| GET         | /api/clientes/{id}        | Retorna cliente por ID           |
-| GET         | /api/clientes/nome/{nome} | Retorna clientes por nome        |
-| GET         | /api/clientes/contar      | Retorna total de registros       |
-| POST        | /api/clientes             | Cria um novo cliente             |
-| PUT         | /api/clientes/{id}        | Atualiza um cliente              |
-| DELETE      | /api/clientes/{id}        | Deleta um cliente                |
+| Método HTTP | URI                        | Descrição                        |
+|-------------|----------------------------|----------------------------------|
+| GET         | /api/customers             | Lista todos os clientes          |
+| GET         | /api/customers/{id}        | Retorna cliente por ID           |
+| GET         | /api/customers/name/{name} | Retorna clientes por nome        |
+| GET         | /api/customers/count       | Retorna total de registros       |
+| POST        | /api/customers             | Cria um novo cliente             |
+| PUT         | /api/customers/{id}        | Atualiza um cliente              |
+| DELETE      | /api/customers/{id}        | Deleta um cliente                |
 
 ---
 
@@ -47,16 +47,19 @@ Este projeto visa exercitar os seguintes conceitos:
 src/
 └── ApiClientes/
     ├── Controllers/         # Controladores REST
-    │   └── ClientesController.cs
+    │   └── CustomersController.cs
     ├── Models/              # Entidades de domínio
-    │   └── Cliente.cs
+    │   └── Customer.cs
     ├── Services/            # Regras de negócio
-    │   └── ClienteService.cs
+    │   └── CustomerService.cs
+    │   └── ICustomerService.cs
     ├── Repositories/        # Interface e implementação de persistência
-    │   └── IClienteRepository.cs
-    │   └── ClienteRepository.cs
-    ├── Data/                # DbContext e Seed
-    │   └── AppDbContext.cs
+    │   └── ICustomerRepository.cs
+    │   └── CustomerRepository.cs
+    ├── Data/                # DbContext
+    │   └── Context/AppDbContext.cs    
+    ├── Data/                # Configurações das tabelas do banco de dados
+    │   └── Mappings
     └── Program.cs           # Configuração principal
 ```
 
@@ -64,13 +67,14 @@ src/
 
 ## 🧠 Explicação dos Componentes (MVC)
 
-| Camada        | Descrição |
-|---------------|-----------|
-| **Model**     | Define a entidade `Cliente` com propriedades como `Id`, `Nome`, `Email`. |
-| **Controller**| Expõe os endpoints HTTP e chama os serviços. |
-| **Service**   | Implementa a lógica de negócio, validações e orquestra chamadas ao repositório. |
-| **Repository**| Interface com o banco de dados usando EF Core. |
-| **Data**      | Classe `DbContext` do EF Core que define o mapeamento e banco de dados. |
+| Camada         | Descrição                                                                       |
+| -------------- | ------------------------------------------------------------------------------- |
+| **Model**      | Define a entidade `Customer` com propriedades como `Id`, `Name`, `Email`.       |
+| **Controller** | Expõe os endpoints HTTP e chama os serviços.                                    |
+| **Service**    | Implementa a lógica de negócio, validações e orquestra chamadas ao repositório. |
+| **Repository** | Interface com o banco de dados usando EF Core.                                  |
+| **Data**       | Classe `DbContext` do EF Core que define o mapeamento e banco de dados.         |
+
 
 ---
 

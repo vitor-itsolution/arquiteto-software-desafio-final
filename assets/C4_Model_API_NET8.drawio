@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36" version="27.1.6">
+  <diagram name="C4 Model - API .NET 8" id="d1">
+    <mxGraphModel dx="1214" dy="1082" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="Partner" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="80" y="10" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="Public API System for Customers&#xa;Provides access to public client data." style="rounded=1;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="295" y="10" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4" style="endArrow=block;endFill=1;" parent="1" source="2" target="3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value=".NET 8 Web API (WCB)" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="70" y="140" width="650" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="6" value="Controller&#xa;Exposes CRUD operations via HTTP" style="rounded=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="5" vertex="1">
+          <mxGeometry x="16.25" y="50.00000000000001" width="195.00000000000003" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="7" value="Service&#xa;Contains business logic" style="rounded=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="5" vertex="1">
+          <mxGeometry x="227.50000000000003" y="50.00000000000001" width="195.00000000000003" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="Repository&#xa;Manages client records" style="rounded=1;fillColor=#ffffff;strokeColor=#6c8ebf;" parent="5" vertex="1">
+          <mxGeometry x="438.75000000000006" y="50.00000000000001" width="195.00000000000003" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="9" style="endArrow=block;endFill=1;" parent="1" source="3" target="5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="10" value="Database&#xa;Stores client data (e.g. SQL Server)" style="shape=cylinder;fillColor=#e1f5d0;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="315" y="570" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="11" style="endArrow=block;endFill=1;" parent="1" source="5" target="10" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
