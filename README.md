@@ -10,12 +10,6 @@ Este projeto visa exercitar os seguintes conceitos:
 
 ---
 
-## 📝 Enunciado
-
-Você é responsável por projetar e implantar uma solução que disponibilize publicamente dados de **Cliente** para os parceiros da empresa, por meio de uma API RESTful seguindo o padrão arquitetural **MVC**, com implementação em **.NET 8**.
-
----
-
 ## 🚀 Tecnologia Utilizada
 
 - **Linguagem**: C# (.NET 8)
@@ -23,7 +17,7 @@ Você é responsável por projetar e implantar uma solução que disponibilize p
 - **Padrão Arquitetural**: MVC (Model-View-Controller)
 - **Banco de Dados**: SQL Server (ou InMemory para testes)
 - **ORM**: Entity Framework Core
-- **Ferramentas**: Swagger, Draw.io
+- **Ferramentas**: Swagger
 
 ---
 
@@ -104,7 +98,9 @@ src/
 - Repositório EF Core
 - Banco de Dados Relacional
 
-🖼️ Diagrama visual: ver imagem anexada ao projeto (c4-context-container.png)
+🖼️ Diagrama visual: ver imagem anexada ao projeto
+
+![](./assets/c4model.jpg)
 
 ---
 
@@ -138,4 +134,3 @@ Caso deseje: [https://github.com/vitor-itsolution/arquiteto-software-desafio-fin
 ## 📌 Considerações Finais
 
 Este projeto demonstra o uso de boas práticas de arquitetura moderna, aplicando conceitos como MVC, C4 Model, organização em camadas, e uso de ferramentas de documentação como Swagger, para entregar uma API pública robusta, reutilizável e fácil de manter.
-
