@@ -1,6 +1,10 @@
+using Empresa1.Api.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddServices();
+builder.Services.AddRepositories();
+builder.Services.AddDbContextConfiguration(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

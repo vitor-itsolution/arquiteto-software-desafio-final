@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Empresa1.Api.ViewModels;
+namespace Empresa1.Api.ViewModels.Customers;
 
 public class CustomerUpdateViewModel
 {

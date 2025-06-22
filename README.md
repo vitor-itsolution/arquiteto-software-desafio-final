@@ -133,8 +133,3 @@ src/
 
 Caso deseje: [https://github.com/vitor-itsolution/arquiteto-software-desafio-final](https://github.com/vitor-itsolution/arquiteto-software-desafio-final)
 
----
-
-## 📌 Considerações Finais
-
-Este projeto demonstra o uso de boas práticas de arquitetura moderna, aplicando conceitos como MVC, C4 Model, organização em camadas, e uso de ferramentas de documentação como Swagger, para entregar uma API pública robusta, reutilizável e fácil de manter.
