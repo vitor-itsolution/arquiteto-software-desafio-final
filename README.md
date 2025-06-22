@@ -45,11 +45,15 @@ Este projeto visa exercitar os seguintes conceitos:
 
 ```plaintext
 src/
-└── ApiClientes/
+└── Empresa1.Api/
     ├── Controllers/         # Controladores REST
     │   └── CustomersController.cs
     ├── Models/              # Entidades de domínio
-    │   └── Customer.cs
+    │   └── Customer.cs    
+    ├── ViewModels/          # Dados Exibidos na interface do usuário (UI)
+    │   └── CustomerViewModel.cs    
+    │   └── CustomerCreateViewModel.cs   
+    │   └── CustomerUpdateViewModel.cs
     ├── Services/            # Regras de negócio
     │   └── CustomerService.cs
     │   └── ICustomerService.cs
@@ -60,6 +64,10 @@ src/
     │   └── Context/AppDbContext.cs    
     ├── Data/                # Configurações das tabelas do banco de dados
     │   └── Mappings
+    ├── Database/            # Banco de dados Sqlite
+    │   └── Empresa1.db
+    ├── Migrations/          # Scripts de banco de dados
+    │   └── *
     └── Program.cs           # Configuração principal
 ```
 
