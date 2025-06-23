@@ -18,8 +18,8 @@ namespace Empresa1.Api.Controllers
         [ProducesResponseType(statusCode: StatusCodes.Status404NotFound)]
         public IActionResult Get()
         {
-            var customers = customerService.GetAll();
-            return !customers.Any() ? NotFound() : Ok(customers);
+            var operationResult = customerService.GetAll();
+            return StatusCode(operationResult.StatusCode, operationResult.Data);
         }
 
         [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: (typeof(CustomerViewModel)))]
@@ -31,8 +31,9 @@ namespace Empresa1.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var customer = await customerService.GetCustomerByIdAsync(id);
-            return customer == null ? NotFound() : Ok(customer);
+            var operationResult = await customerService.GetCustomerByIdAsync(id);
+            
+            return StatusCode(operationResult.StatusCode, operationResult.Data);
         }
 
         [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: (typeof(CustomerViewModel)))]
@@ -44,8 +45,8 @@ namespace Empresa1.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var customers = await customerService.GetCustomerByName(name);
-            return !customers.Any() ? NotFound() : Ok(customers);
+            var operationResult = await customerService.GetCustomerByName(name);
+            return StatusCode(operationResult.StatusCode, operationResult.Data);
         }
 
         [ProducesResponseType(statusCode: StatusCodes.Status200OK, type: (typeof(CustomerTotalViewModel)))]
@@ -54,7 +55,8 @@ namespace Empresa1.Api.Controllers
         [HttpGet("/count")]
         public async Task<IActionResult> GetCount()
         {
-            return Ok(await customerService.CountAsync());
+            var operationResult = await customerService.CountAsync();
+            return StatusCode(operationResult.StatusCode, operationResult.Data);
         }
 
         [ProducesResponseType(statusCode: StatusCodes.Status201Created)]
@@ -66,11 +68,15 @@ namespace Empresa1.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var createdCustomer = await customerService.CreateAsync(customer);
+            var operationResult = await customerService.CreateAsync(customer);
+            
+            if (!operationResult.Success)
+                return StatusCode(operationResult.StatusCode, operationResult);
+            
             return CreatedAtAction(
                 nameof(GetById),
-                new { id = createdCustomer?.Id },
-                createdCustomer
+                new { id = operationResult?.Data?.Id },
+                operationResult?.Data
             );
         }
 
@@ -83,7 +89,10 @@ namespace Empresa1.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await customerService.UpdateAsync(customer, id);
+            var operationResult = await customerService.UpdateAsync(customer, id);
+            
+            if (!operationResult.Success)
+                return StatusCode(operationResult.StatusCode, operationResult);
 
             return NoContent();
         }
@@ -97,8 +106,12 @@ namespace Empresa1.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var deletedCustomer = await customerService.DeleteAsync(id);
-            return deletedCustomer == null ? NotFound() : NoContent();
+            var operationResult = await customerService.DeleteAsync(id);
+            
+            if (!operationResult.Success)
+                return StatusCode(operationResult.StatusCode, operationResult);
+            
+            return NoContent();
         }
     }
 }

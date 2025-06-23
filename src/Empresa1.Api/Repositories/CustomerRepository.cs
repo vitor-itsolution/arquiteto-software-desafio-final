@@ -30,14 +30,14 @@ public class CustomerRepository(ApplicationDbContext applicationDbContext) : ICu
         var existingCustomer = await GetCustomerByIdAsync(id);
 
         if (existingCustomer == null)
-           return null;
+            return null;
 
-        await ValidateEmailUniqueness(customer.Email);
+        await ValidateEmailUniqueness(customer.Email, id);
 
         UpdateCustomerProperties(existingCustomer, customer);
-        
+
         applicationDbContext.Customers.Update(existingCustomer);
-        
+
         await applicationDbContext.SaveChangesAsync();
 
         return existingCustomer;
@@ -55,7 +55,7 @@ public class CustomerRepository(ApplicationDbContext applicationDbContext) : ICu
     public async Task<Customer?> DeleteAsync(Guid id)
     {
         var customerEntity = await GetCustomerByIdAsync(id);
-        
+
         if (customerEntity == null)
             return null;
 
@@ -69,15 +69,24 @@ public class CustomerRepository(ApplicationDbContext applicationDbContext) : ICu
         return await applicationDbContext.Customers.AsQueryable().CountAsync();
     }
 
-    private async Task ValidateEmailUniqueness(string customerEmail)
+    private async Task ValidateEmailUniqueness(string customerEmail, Guid? id = null)
     {
-        var emailExists = await applicationDbContext.Customers
-            .AnyAsync(c => c.Email == customerEmail);
+        if (string.IsNullOrWhiteSpace(customerEmail))
+            return;
+        
+        var query = applicationDbContext.Customers.AsQueryable();
+
+        query = query.Where(c => c.Email == customerEmail);
+
+        if (id.HasValue)
+            query = query.Where(c => c.Id != id.Value);
+
+        var emailExists = await query.AnyAsync();
 
         if (emailExists)
             throw new InvalidOperationException("Já existe outro cliente com o e-mail informado.");
     }
-    
+
     private void UpdateCustomerProperties(Customer existingCustomer, Customer customer)
     {
         existingCustomer.Update(customer.Name, customer.Email, customer.Phone, customer.Address);
