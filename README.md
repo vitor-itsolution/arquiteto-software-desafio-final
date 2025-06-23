@@ -3,10 +3,11 @@
 ## 📚 Objetivos de Ensino
 
 Este projeto visa exercitar os seguintes conceitos:
-- Fundamentos de Arquitetura de Software.
-- Requisitos Arquiteturais e Modelagem Arquitetural.
-- Design Patterns, Estilos e Padrões Arquiteturais.
-- Principais Arquiteturas de Software da Atualidade.
+
+- Fundamentos de Arquitetura de Software
+- Requisitos Arquiteturais e Modelagem Arquitetural
+- Design Patterns, Estilos e Padrões Arquiteturais
+- Principais Arquiteturas de Software da Atualidade
 
 ---
 
@@ -17,13 +18,13 @@ Este projeto visa exercitar os seguintes conceitos:
 - **Padrão Arquitetural**: MVC (Model-View-Controller)
 - **Banco de Dados**: SQL Server (ou InMemory para testes)
 - **ORM**: Entity Framework Core
-- **Ferramentas**: Swagger
+- **Ferramentas**: Swagger, EF Core Migrations
 
 ---
 
 ## 🔧 Funcionalidades da API
 
-- CRUD completo de `Cliente`
+- CRUD completo de Cliente
 - Contagem de registros
 - Busca por nome e por ID
 
@@ -46,43 +47,31 @@ Este projeto visa exercitar os seguintes conceitos:
 ```plaintext
 src/
 └── Empresa1.Api/
-    ├── Controllers/         # Controladores REST
-    │   └── CustomersController.cs
-    ├── Models/              # Entidades de domínio
-    │   └── Customer.cs    
-    ├── ViewModels/          # Dados Exibidos na interface do usuário (UI)
-    │   └── CustomerViewModel.cs    
-    │   └── CustomerCreateViewModel.cs   
-    │   └── CustomerUpdateViewModel.cs
-    ├── Services/            # Regras de negócio
-    │   └── CustomerService.cs
-    │   └── ICustomerService.cs
-    ├── Repositories/        # Interface e implementação de persistência
-    │   └── ICustomerRepository.cs
-    │   └── CustomerRepository.cs
-    ├── Data/                # DbContext
-    │   └── Context/AppDbContext.cs    
-    ├── Data/                # Configurações das tabelas do banco de dados
-    │   └── Mappings
-    ├── Database/            # Banco de dados Sqlite
-    │   └── Empresa1.db
-    ├── Migrations/          # Scripts de banco de dados
-    │   └── *
-    └── Program.cs           # Configuração principal
+    ├── Controllers/         
+    ├── Models/              
+    ├── ViewModels/          
+    ├── Services/            
+    ├── Repositories/        
+    ├── Data/                
+    ├── Mappings/            
+    ├── Database/            
+    ├── Migrations/          
+    └── Program.cs           
 ```
+
 
 ---
 
 ## 🧠 Explicação dos Componentes (MVC)
 
-| Camada         | Descrição                                                                       |
-| -------------- | ------------------------------------------------------------------------------- |
-| **Model**      | Define a entidade `Customer` com propriedades como `Id`, `Name`, `Email`.       |
-| **Controller** | Expõe os endpoints HTTP e chama os serviços.                                    |
-| **Service**    | Implementa a lógica de negócio, validações e orquestra chamadas ao repositório. |
-| **Repository** | Interface com o banco de dados usando EF Core.                                  |
-| **Data**       | Classe `DbContext` do EF Core que define o mapeamento e banco de dados.         |
-
+| Camada         | Descrição                                                     |
+| -------------- | ------------------------------------------------------------- |
+| **Model**      | Define a entidade `Customer` com regras básicas.              |
+| **Controller** | Exposição de endpoints REST.                                  |
+| **Service**    | Contém as regras de negócio e orquestra os fluxos.            |
+| **Repository** | Camada de acesso a dados com EF Core.                         |
+| **ViewModel**  | Define os modelos usados para entrada e saída da API.         |
+| **DbContext**  | Representação da estrutura do banco e mapeamento com EF Core. |
 
 ---
 
@@ -105,10 +94,28 @@ src/
 
 ### 🔹 Nível 2 — Container
 
-- API REST em .NET 8
-- Serviço de Lógica de Negócio
-- Repositório EF Core
-- Banco de Dados Relacional
+```plaintext
++----------------------------+
+|    ASP.NET Core API        |
++----------------------------+
+            │
+            ▼
++----------------------------+
+|  Application Service       |
++----------------------------+
+            │
+            ▼
++----------------------------+
+|  Repository (EF Core)      |
++----------------------------+
+            │
+            ▼
++----------------------------+
+|       SQL Server           |
++----------------------------+
+
+```
+
 
 🖼️ Diagrama visual: ver imagem anexada ao projeto
 
@@ -116,12 +123,62 @@ src/
 
 ---
 
+### 🔹 Nível 3 — Componentes
+
+```plaintext
+CustomerService.cs
+├── ValidateEmailUniqueness()
+├── CreateAsync()
+├── GetByIdAsync()
+└── GetAllAsync()
+
+CustomerRepository.cs
+├── GetByIdAsync()
+├── GetAllAsync()
+├── EmailExistsAsync()
+└── AddAsync()
+
+```
+
+### 🔹 Nível 4 — Código
+
+```csharp
+// Customer.cs
+public class Customer
+{
+    public Guid Id { get; private set; }
+    public string Name { get; private set; }
+    public string Email { get; private set; }
+    public string? Phone { get; private set; }
+    public string? Address { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+}
+
+```
+
+```csharp
+// CustomerService.cs
+public async Task<OperationResult<CustomerViewModel>> CreateAsync(CustomerCreateViewModel input)
+{
+    if (await EmailExistsAsync(input.Email))
+        return OperationResult.Fail("Já existe um cliente com esse e-mail.", 409);
+
+    var customer = new Customer(...);
+    await _repository.AddAsync(customer);
+
+    return OperationResult.Ok(new CustomerViewModel(...), 201);
+}
+
+```
+
 ## 💡 Diferenciais
 
-- Projeto documentado com Swagger
-- Implementação desacoplada com Injeção de Dependência
-- Estrutura modularizada e escalável
-- Códigos organizados por responsabilidade (SRP - SOLID)
+- Documentação com Swagger/OpenAPI 3.0
+- Adoção do C4 Model completo para comunicação arquitetural
+- Aplicação dos princípios SOLID e Clean Architecture
+- Camadas separadas com injeção de dependência e testes facilitados
+- Mapeamento limpo com DTOs/ViewModels
+- Código modular, de fácil leitura e manutenção
 
 ---
 
@@ -132,8 +189,8 @@ src/
 - ✅ Diagrama C4 entregue
 - ✅ Explicação dos componentes
 - ✅ Persistência implementada com EF Core
-- ✅ Organização de pastas clara
-- ✅ (Opcional) Código pode ser entregue via GitHub
+- ✅ Banco com Migrations
+- ✅ Swagger documentando a API
 
 ---
 
