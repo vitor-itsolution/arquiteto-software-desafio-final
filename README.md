@@ -80,16 +80,19 @@ src/
 ### 🔹 Nível 1 — Contexto
 
 ```plaintext
-[Parceiros Externos]
-        │
-        ▼
-[API Pública de Clientes (.NET 8)]
-        │
-        ▼
-[Camada de Serviço]
-        │
-        ▼
-[SQL Server]
++-------------------------+
+|    Usuário Final        |
++-------------------------+
+            │
+            ▼
++-------------------------+
+|  API de Clientes (.NET) |
++-------------------------+
+            │
+     ┌──────┴──────┐
+     ▼             ▼
+[Sistema ERP]   [Front-End Admin]
+
 ```
 
 ### 🔹 Nível 2 — Container
